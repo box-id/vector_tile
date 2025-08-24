@@ -7,7 +7,10 @@ defmodule VectorTile.MixProject do
       version: "0.1.0",
       elixir: "~> 1.18",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      preferred_cli_env: [
+        "test.watch": :test
+      ]
     ]
   end
 
@@ -21,7 +24,8 @@ defmodule VectorTile.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:protobuf, "~> 0.15.0"}
+      {:protobuf, "~> 0.15.0"},
+      {:mix_test_watch, "~> 1.3", only: [:dev, :test], runtime: false}
     ]
   end
 end
