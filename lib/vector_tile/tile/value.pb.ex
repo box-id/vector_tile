@@ -12,4 +12,21 @@ defmodule VectorTile.Tile.Value do
   field :bool_value, 7, optional: true, type: :bool, json_name: "boolValue"
 
   extensions [{8, Protobuf.Extension.max()}]
+
+  def from_plain(value) when is_integer(value) do
+    struct!(__MODULE__, int_value: value)
+  end
+
+  def from_plain(value) when is_float(value) do
+    # Elixir only has double precision floats
+    struct!(__MODULE__, double_value: value)
+  end
+
+  def from_plain(value) when is_binary(value) do
+    struct!(__MODULE__, string_value: value)
+  end
+
+  def from_plain(value) when is_boolean(value) do
+    struct!(__MODULE__, bool_value: value)
+  end
 end
