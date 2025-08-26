@@ -7,44 +7,74 @@ defmodule VectorTile.LayerTest do
   }
 
   describe "add_feature/3" do
-    test "adds a feature with properties to the layer" do
+    test "adds a feature without attributes to the layer" do
       layer = %Layer{name: "clusters"}
       feature = %Feature{type: :POINT, geometry: [9, 0, 0]}
-      properties = %{count: 12, type: "cluster"}
-
-      layer = Layer.add_feature(layer, feature, properties)
-
-      assert length(layer.features) == 1
-      assert layer == encode(layer)
-
-      feature = Enum.at(layer.features, 0)
-
-      assert properties == feature_properties(feature, layer)
-    end
-
-    test "repeated property keys & values are deduplicated" do
-      layer = %Layer{name: "clusters"}
-      feature1 = %Feature{id: 1, type: :POINT, geometry: [9, 0, 0]}
-      feature2 = %Feature{id: 2, type: :POINT, geometry: [9, 0, 0]}
-      properties1 = %{count: 13, type: "cluster"}
-      properties2 = %{count: 12, type: "cluster"}
 
       layer =
         layer
-        |> Layer.add_feature(feature1, properties1)
-        |> Layer.add_feature(feature2, properties2)
+        |> Layer.add_feature(feature)
+        |> encode()
+
+      assert length(layer.features) == 1
+
+      feature = Enum.at(layer.features, 0)
+      assert feature == encode(feature)
+    end
+
+    test "adds a feature with attributes to the layer" do
+      layer = %Layer{name: "clusters"}
+      feature = %Feature{type: :POINT, geometry: [9, 0, 0]}
+      attributes = %{count: 12, type: "cluster"}
+
+      layer =
+        layer
+        |> Layer.add_feature(feature, attributes)
+        |> encode()
+
+      assert length(layer.features) == 1
+
+      feature = Enum.at(layer.features, 0)
+
+      assert attributes == feature_attributes(feature, layer)
+    end
+
+    test "repeated attribute keys & values are deduplicated" do
+      layer = %Layer{name: "clusters"}
+      feature_1 = %Feature{id: 1, type: :POINT, geometry: [9, 0, 0]}
+      feature_2 = %Feature{id: 2, type: :POINT, geometry: [9, 0, 0]}
+      attributes_1 = %{count: 13, type: "cluster"}
+      attributes_2 = %{count: 12, type: "cluster"}
+
+      layer =
+        layer
+        |> Layer.add_feature(feature_1, attributes_1)
+        |> Layer.add_feature(feature_2, attributes_2)
+        |> encode()
 
       assert length(layer.features) == 2
       assert length(layer.keys) == 2
       assert length(layer.values) == 3
-      assert layer == encode(layer)
 
       # Note inverse order of features
-      feature1 = Enum.at(layer.features, 1)
-      feature2 = Enum.at(layer.features, 0)
+      feature_1 = Enum.at(layer.features, 1)
+      feature_2 = Enum.at(layer.features, 0)
 
-      assert properties1 == feature_properties(feature1, layer)
-      assert properties2 == feature_properties(feature2, layer)
+      assert attributes_1 == feature_attributes(feature_1, layer)
+      assert attributes_2 == feature_attributes(feature_2, layer)
+    end
+
+    test "skips attributes with nil values" do
+      layer = %Layer{name: "clusters"}
+      feature = %Feature{type: :POINT, geometry: [9, 0, 0]}
+      attributes = %{count: 12, type: "cluster", description: nil}
+
+      layer =
+        Layer.add_feature(layer, feature, attributes)
+        |> encode()
+
+      feature = Enum.at(layer.features, 0)
+      assert Map.delete(attributes, :description) == feature_attributes(feature, layer)
     end
   end
 
@@ -54,7 +84,8 @@ defmodule VectorTile.LayerTest do
     |> Protobuf.decode(module)
   end
 
-  defp feature_properties(feature, layer) do
+  # Convert feature tags back to a map of attributes
+  defp feature_attributes(feature, layer) do
     key_tags = feature.tags |> Enum.take_every(2)
     value_tags = feature.tags |> Enum.drop(1) |> Enum.take_every(2)
 

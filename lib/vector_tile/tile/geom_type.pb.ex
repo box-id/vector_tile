@@ -1,5 +1,8 @@
 defmodule VectorTile.Tile.GeomType do
-  @moduledoc false
+  @moduledoc """
+  Used to mark the geometry type of a [`Feature`](`VectorTile.Tile.Feature`) as either `:UNKNOWN`, `:POINT`,
+  `:LINESTRING`, or `:POLYGON`.
+  """
 
   use Protobuf, enum: true, protoc_gen_elixir_version: "0.15.0", syntax: :proto2
 

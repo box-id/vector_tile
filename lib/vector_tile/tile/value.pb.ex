@@ -1,5 +1,11 @@
 defmodule VectorTile.Tile.Value do
-  @moduledoc false
+  @moduledoc """
+  Represents a [`Feature`](`VectorTile.Tile.Feature`)'s attribute value.
+
+  You typically don't need to interface with this type directly, as
+  [`Layer.add_feature/3`](`VectorTile.Tile.Layer.add_feature/3`) will wrap the plain attribute values using
+  `from_plain/1`.
+  """
 
   use Protobuf, protoc_gen_elixir_version: "0.15.0", syntax: :proto2
 
@@ -12,6 +18,12 @@ defmodule VectorTile.Tile.Value do
   field :bool_value, 7, optional: true, type: :bool, json_name: "boolValue"
 
   extensions [{8, Protobuf.Extension.max()}]
+
+  @doc """
+  Creates a Value struct from a plain value (currently supporting integer, float, string, or boolean).
+  """
+  @spec from_plain(integer() | float() | binary() | boolean()) :: t()
+  def from_plain(value)
 
   def from_plain(value) when is_integer(value) do
     struct!(__MODULE__, int_value: value)
