@@ -11,7 +11,9 @@ defmodule VectorTile.Tile.Feature do
 
   To produce a feature's geometry with known geo coordinates in WGS 84, the steps are generally as follows:
 
-  1. Project the feature's coordinates to [Web Mercator](https://en.wikipedia.org/wiki/Web_Mercator_projection)
+  1. Project the feature's coordinates & the tile's bounds to [Web
+     Mercator](https://en.wikipedia.org/wiki/Web_Mercator_projection), e.g. using
+     [SphericalMercator](https://hex.pm/packages/spherical_mercator).
   2. Perform a linear interpolation relative to the tile's boundaries into the 4096x4096 "pixel" grid.
   3. Choose the correct
      [*CommandInteger*(s)](https://github.com/mapbox/vector-tile-spec/tree/master/2.1#431-command-integers) and
