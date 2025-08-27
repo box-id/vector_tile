@@ -1,7 +1,7 @@
 defmodule VectorTile.LayerTest do
   use ExUnit.Case, async: true
 
-  alias VectorTile.Tile.{
+  alias VectorTile.{
     Feature,
     Layer
   }

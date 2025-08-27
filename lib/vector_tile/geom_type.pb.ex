@@ -1,6 +1,6 @@
-defmodule VectorTile.Tile.GeomType do
+defmodule VectorTile.GeomType do
   @moduledoc """
-  Used to mark the geometry type of a [`Feature`](`VectorTile.Tile.Feature`) as either `:UNKNOWN`, `:POINT`,
+  Used to mark the geometry type of a [`Feature`](`VectorTile.Feature`) as either `:UNKNOWN`, `:POINT`,
   `:LINESTRING`, or `:POLYGON`.
   """
 

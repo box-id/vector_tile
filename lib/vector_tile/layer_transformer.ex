@@ -1,9 +1,9 @@
-defmodule VectorTile.Tile.LayerTransformer do
+defmodule VectorTile.LayerTransformer do
   @moduledoc false
 
   @behaviour Protobuf.TransformModule
 
-  alias VectorTile.Tile.{
+  alias VectorTile.{
     Layer,
     Value
   }

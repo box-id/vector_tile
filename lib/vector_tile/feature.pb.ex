@@ -1,10 +1,10 @@
-defmodule VectorTile.Tile.Feature do
+defmodule VectorTile.Feature do
   @moduledoc """
   Represents a [feature](https://github.com/mapbox/vector-tile-spec/tree/master/2.1#42-features) that can be part of a
-  [`Layer`](`VectorTile.Tile.Layer`) and contains a geometry as well as a set of attributes.
+  [`Layer`](`VectorTile.Layer`) and contains a geometry as well as a set of attributes.
 
   Due to the way attributes are reused across a layer's features, don't manage `tags` directly and use
-  [`Layer.add_feature/3`](`VectorTile.Tile.Layer.add_feature/3`) instead.
+  [`Layer.add_feature/3`](`VectorTile.Layer.add_feature/3`) instead.
 
   See [Geometry Encoding](https://github.com/mapbox/vector-tile-spec/tree/master/2.1#43-geometry-encoding) when defining
   the geometry of a feature, as this library currently provides no helpers to do this except for `zigzag/1`.
@@ -22,8 +22,8 @@ defmodule VectorTile.Tile.Feature do
 
   ## Example
 
-      iex> import VectorTile.Tile.Feature
-      iex> feature = %VectorTile.Tile.Feature{
+      iex> import VectorTile.Feature
+      iex> feature = %VectorTile.Feature{
       ...>   type: :POINT,
       ...>   geometry: [
       ...>     9, # MoveTo command with 1 following pair of coordinates
@@ -31,14 +31,14 @@ defmodule VectorTile.Tile.Feature do
       ...>     zigzag(500)
       ...>   ]
       ...> }
-      %VectorTile.Tile.Feature{}
+      %VectorTile.Feature{}
   """
 
   use Protobuf, protoc_gen_elixir_version: "0.15.0", syntax: :proto2
 
   field :id, 1, optional: true, type: :uint64, default: 0
   field :tags, 2, repeated: true, type: :uint32, packed: true, deprecated: false
-  field :type, 3, optional: true, type: VectorTile.Tile.GeomType, default: :UNKNOWN, enum: true
+  field :type, 3, optional: true, type: VectorTile.GeomType, default: :UNKNOWN, enum: true
   field :geometry, 4, repeated: true, type: :uint32, packed: true, deprecated: false
 
   @neg_max -1 * 2 ** 31

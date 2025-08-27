@@ -1,11 +1,11 @@
-defmodule VectorTile.Tile.Layer do
+defmodule VectorTile.Layer do
   @moduledoc """
   Represents a [layer](https://github.com/mapbox/vector-tile-spec/tree/master/2.1#41-layers) in a vector tile which
-  can contain multiple [`Feature`](`VectorTile.Tile.Feature`)s.
+  can contain multiple [`Feature`](`VectorTile.Feature`)s.
 
   ## Example
 
-      iex> layer = %VectorTile.Tile.Layer{
+      iex> layer = %VectorTile.Layer{
       ...>   name: "clusters",
       ...>   version: 2
       ...> }
@@ -15,14 +15,14 @@ defmodule VectorTile.Tile.Layer do
 
   field :version, 15, required: true, type: :uint32, default: 1
   field :name, 1, required: true, type: :string
-  field :features, 2, repeated: true, type: VectorTile.Tile.Feature
+  field :features, 2, repeated: true, type: VectorTile.Feature
   field :keys, 3, repeated: true, type: :string
-  field :values, 4, repeated: true, type: VectorTile.Tile.Value
+  field :values, 4, repeated: true, type: VectorTile.Value
   field :extent, 5, optional: true, type: :uint32, default: 4096
 
   extensions [{16, Protobuf.Extension.max()}]
 
-  def transform_module(), do: VectorTile.Tile.LayerTransformer
+  def transform_module(), do: VectorTile.LayerTransformer
 
   @doc """
   Adds a feature to the layer. Optionally handles feature attributes, which are added to the layer's `keys` and
@@ -40,25 +40,25 @@ defmodule VectorTile.Tile.Layer do
 
   ## Example
 
-      iex> layer = %VectorTile.Tile.Layer{}
-      iex> feature = %VectorTile.Tile.Feature{}
-      iex> VectorTile.Tile.Layer.add_feature(layer, feature, color: "red", size: 42, count: 42)
-      %VectorTile.Tile.Layer{
+      iex> layer = %VectorTile.Layer{}
+      iex> feature = %VectorTile.Feature{}
+      iex> VectorTile.Layer.add_feature(layer, feature, color: "red", size: 42, count: 42)
+      %VectorTile.Layer{
         features: [
-          %VectorTile.Tile.Feature{
+          %VectorTile.Feature{
             tags: [0, 0, 1, 1, 2, 1]
             # ...
           }
         ],
         keys: ["color", "size", "count"],
         values: [
-          %VectorTile.Tile.Value{string_value: "red"},
-          %VectorTile.Tile.Value{int_value: 42}
+          %VectorTile.Value{string_value: "red"},
+          %VectorTile.Value{int_value: 42}
         ]
         # ...
       }
   """
-  @spec add_feature(t(), VectorTile.Tile.Feature.t(), map() | Keyword.t()) :: t()
+  @spec add_feature(t(), VectorTile.Feature.t(), map() | Keyword.t()) :: t()
   def add_feature(layer, feature, attributes \\ %{}) do
     {layer, feature} =
       Enum.reduce(attributes, {layer, feature}, fn
