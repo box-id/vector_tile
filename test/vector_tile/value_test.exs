@@ -1,7 +1,7 @@
 defmodule VectorTile.ValueTest do
   use ExUnit.Case, async: true
 
-  alias VectorTile.Tile.Value
+  alias VectorTile.Value
 
   describe "from_plain/1" do
     test "creates integer value" do

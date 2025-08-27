@@ -1,9 +1,9 @@
-defmodule VectorTile.Tile.Value do
+defmodule VectorTile.Value do
   @moduledoc """
-  Represents a [`Feature`](`VectorTile.Tile.Feature`)'s attribute value.
+  Represents a [`Feature`](`VectorTile.Feature`)'s attribute value.
 
   You typically don't need to interface with this type directly, as
-  [`Layer.add_feature/3`](`VectorTile.Tile.Layer.add_feature/3`) will wrap the plain attribute values using
+  [`Layer.add_feature/3`](`VectorTile.Layer.add_feature/3`) will wrap the plain attribute values using
   `from_plain/1`.
   """
 

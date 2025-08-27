@@ -1,7 +1,7 @@
 defmodule VectorTile.FeatureTest do
   use ExUnit.Case, async: true
 
-  alias VectorTile.Tile.Feature
+  alias VectorTile.Feature
 
   describe "zigzag/1" do
     test "supports specified number range" do
