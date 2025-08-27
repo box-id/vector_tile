@@ -13,9 +13,9 @@ protobuf.
 The following sample shows how to create a simple vector tile with one layer and one point feature:
 
 ```elixir
-alias VectorTile{
-  Layer,
+alias VectorTile.{
   Feature,
+  Layer,
   Tile
 }
 
