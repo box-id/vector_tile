@@ -1,0 +1,17 @@
+name: 🔩 Publish Release (Auto)
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "mix.exs"
+
+jobs:
+  release:
+    name: Publish Release
+    uses: box-id/github-actions/.github/workflows/elixir_publish_release.yml@main
+    with:
+      publish-to-hex: true
+      version-prefix: "v"
+    secrets: inherit
