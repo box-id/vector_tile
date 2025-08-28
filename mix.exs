@@ -7,6 +7,10 @@ defmodule VectorTile.MixProject do
     [
       app: :vector_tile,
       version: "1.0.0",
+      description:
+        "Implementation of the [Vector Tile Spec](https://github.com/mapbox/vector-tile-spec/tree/master/2.1), version 2.1. This
+package allows you to efficiently build vector tiles including layers and features with geometry and encode them to
+protobuf.",
       elixir: "~> 1.18",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
