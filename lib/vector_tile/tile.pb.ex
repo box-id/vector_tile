@@ -22,4 +22,34 @@ defmodule VectorTile.Tile do
   field :layers, 3, repeated: true, type: VectorTile.Layer
 
   extensions [{16, 8192}]
+
+  @doc """
+  Creates a new `VectorTile.Tile` struct.
+
+  The properties provided in `opts` are set on the struct. While they are not used for encoding the tile, they can be
+  useful for coordinate calculations with the `VectorTile.Coordinates` module.
+
+  ## Options
+
+    * `:bbox` - The bounding box of the tile as `[west, south, east, north]`. Optional.
+    * `:extent` - The extent of the tile. Optional, defaults to `4096`.
+
+  """
+  def new(opts \\ []) do
+    struct(__MODULE__, opts)
+    |> Map.put(:extent, Keyword.get(opts, :extent, 4096))
+    |> Map.put(:bbox, Keyword.get(opts, :bbox, nil))
+  end
+
+  # Implement Access behaviour to allow accessing fields like a map.
+  @behaviour Access
+
+  @impl Access
+  defdelegate fetch(v, key), to: Map
+
+  @impl Access
+  defdelegate get_and_update(v, key, func), to: Map
+
+  @impl Access
+  defdelegate pop(v, key), to: Map
 end

@@ -28,11 +28,7 @@ layer = %Layer{
 # Add a feature with attributes
 layer = Layer.add_feature(
   layer,
-  %Feature{
-    type: :POINT,
-    # "Raw" geometry specification as per https://github.com/mapbox/vector-tile-spec/tree/master/2.1#43-geometry-encoding
-    geometry: [9, 128, 128]
-  },
+  Feature.point([128, 128]),
   count: 42,
   size: "large"
 )
