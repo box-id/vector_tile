@@ -14,9 +14,6 @@ protobuf.",
       elixir: "~> 1.18",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      preferred_cli_env: [
-        "test.watch": :test
-      ],
 
       # Docs
       name: "VectorTile",
@@ -24,6 +21,10 @@ protobuf.",
       docs: docs(),
       package: package()
     ]
+  end
+
+  def cli do
+    [preferred_envs: ["test.watch": :test]]
   end
 
   defp docs do
