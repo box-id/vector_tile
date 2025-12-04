@@ -24,8 +24,7 @@ defmodule VectorTile.Coordinates do
       # y = 0, because it's on the north edge of the tile's bounding box
 
   """
-  @spec interpolate(coordinate :: list(number()), tile :: VectorTile.Tile.t() | Keyword.t()) ::
-          list(integer())
+  @spec interpolate(coordinate :: list(number()), tile :: map() | Keyword.t()) :: list(integer())
   def interpolate([x, y] = _coordinate, opts) when is_number(x) and is_number(y) do
     bbox = Access.fetch!(opts, :bbox)
     extent = Access.get(opts, :extent, 4096)
