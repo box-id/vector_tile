@@ -49,11 +49,9 @@ defmodule VectorTile.Feature do
   [*ParameterInteger*](https://github.com/mapbox/vector-tile-spec/tree/master/2.1#432-parameter-integers).
 
   Supports values greater than -2^31 and less than 2^31.
-  """
-  @spec zigzag(integer()) :: integer()
-  def zigzag(value) when is_integer(value) and @neg_max < value and value < @pos_max do
-    import Bitwise
 
-    Bitwise.bxor(value <<< 1, value >>> 31)
-  end
+  Deprecated: Use `VectorTile.Coordinates.zigzag/1` instead.
+  """
+  @deprecated "Use VectorTile.Coordinates.zigzag/1 instead"
+  defdelegate zigzag(value), to: VectorTile.Coordinates
 end
