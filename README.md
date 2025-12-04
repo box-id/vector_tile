@@ -47,7 +47,7 @@ Tile.encode(tile)
 ```elixir
 def deps do
   [
-    {:vector_tile, "~> 0.1.0"}
+    {:vector_tile, "~> 1.1.0"}
   ]
 end
 ```

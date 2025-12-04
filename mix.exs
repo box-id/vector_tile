@@ -6,7 +6,7 @@ defmodule VectorTile.MixProject do
   def project do
     [
       app: :vector_tile,
-      version: "1.0.0",
+      version: "1.1.0",
       description:
         "Implementation of the [Vector Tile Spec](https://github.com/mapbox/vector-tile-spec/tree/master/2.1), version 2.1. This
 package allows you to efficiently build vector tiles including layers and features with geometry and encode them to
